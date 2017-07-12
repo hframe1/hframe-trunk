@@ -1,0 +1,76 @@
+##第一部分：传入参数
+
+
+#set($map=$MAP)
+#set($oldObjectValue=$map.get("oldObjectValue"))
+
+
+##模板内容
+<table class='zqh_form' id='$map.get("FormId")'>
+ <form action='/$!map.get("Url")' method='post' id='$map.get("FormId")_FORM'>
+			<thead>
+				<tr>
+					#foreach($foo in [1..$map.get("ColNum")])
+					
+					#end
+				
+					<td colspan=100% class='zqh_form_title'><center><h2>$map.get("Title")</h2></center></td>
+				</tr>
+			</thead>
+			<tbody>
+				#set($colNum=0);
+				#foreach($column in $map.get("columnsList"))
+				
+					##第一次for循环....
+					#if($velocityCount==1)
+						<tr>
+					#end
+					
+					##中间循环....
+					#set($colNum=$colNum+$column.ShowType.ColSpan+1)
+					#if($colNum > $map.get("ColNum"))
+						</tr>
+						<tr>
+						#set($colNum=0+$column.ShowType.ColSpan+1)
+					#end
+					
+						#if(!$null.isNull($oldObjectValue.get(${column.Name})))
+							#set($value=$oldObjectValue.get(${column.Name}))
+						#else
+							#set($value=11111111)
+						#end
+					
+						
+						<td  class='zqh_form_td_name' style='width:$column.Width'>
+						
+						
+						【$velocityCount】 
+							$column.DisplayName：
+						</td>
+						
+						
+						<td colspan=$column.ShowType.ColSpan  class='zqh_form_td_value' style='width:$column.FiledWidth'>
+						
+								#if($map.get("Editable")=='text')
+									#parse("com/hframe/tag/vm/showType_OnlyShow.vm")
+								#else
+									#parse("com/hframe/tag/vm/showType.vm")
+								#end
+						</td>
+					
+					##最后一次for循环....
+					#if($velocityCount== $map.get("columnsList").size())
+						</tr>
+					#end	
+					
+				
+				#end
+			</tbody>		
+			<tfoot>
+				<tr>
+					<td class='zqh_form_footer' colspan=100%><input class="zqh_form_submit" type="submit" value="提交"> </td>
+				</tr>
+			</tfoot>
+			</form>
+		</table>
+	

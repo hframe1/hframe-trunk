@@ -1,0 +1,28 @@
+<interfaceExample>
+    <name>queryOrder</name>
+    <url>
+        <![CDATA[
+            http://sandbox.firstpay.com/security/gateway.do?service=REQ_QUICK_QUERY_BY_ID&secId=RSA&version=3.0.0&reqSn=132434&merchantId=AAAA&merchantNo=fdsafds&sign=fdsafdsafds
+        ]]>
+        </url>
+    <requestMessage>
+        <![CDATA[
+        ]]>
+    </requestMessage>
+    <responseMessage>
+        <![CDATA[
+         {
+            "resCode": "00000",
+            "resMessage": "成功",
+            "merchantId": "10000009999",
+            "merchantNo": "20150109022501484",
+            "tradeNo": "201501151426021031610000004010",
+            "status": "S",
+            "tradeTime": "20150115142602",
+             "amount": "123",
+            "transCur": "156",
+            "memo": ""
+        }
+        ]]>
+    </responseMessage>
+</interfaceExample>

@@ -1,0 +1,23 @@
+##第一部分：传入参数
+
+
+#set($map=$MAP)
+#set($id=$!map.get("Id"))
+#set($class=$!map.get("Class"))
+#set($name=$!map.get("Name"))
+#set($loadingFlag=$!map.get("LoadingFlag"))
+#set($collapseId=$!map.get("CollapseId"))
+#set($onClick=$!map.get("OnClick"))
+
+<button type="button"  id="$!id"  class="$!class" onclick="$!onClick" 
+
+#if($!loadingFlag==1)
+ data-loading-text="处理中.." 
+#end
+
+#if($!loadingFlag!="")
+ data-toggle="collapse" data-target="#$!loadingFlag" aria-expanded="false" aria-controls="$!loadingFlag" 
+#end 
+>$!name</button>
+
+

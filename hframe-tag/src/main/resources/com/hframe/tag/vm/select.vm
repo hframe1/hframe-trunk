@@ -1,0 +1,19 @@
+##第一部分：传入参数
+
+
+#set($map=$MAP)
+#set($optionList=$!map.get("optionList"))
+<input id='$map.get("selectId")_TAGINFO'  name='$map.get("selectId")_TAGINFO' type='hidden' value='$map.get("TagInfo")'/>
+<div class="form-group form-inline" >
+<label>$!map.get("Title")</label>
+ <select id="$!map.get("selectId")"  class="form-control"    style='width:$!map.get("Width")' onclick="$!map.get("onclick")"  onchange="$!map.get("onchange") " view="$!map.get("View") ">#foreach($option in $optionList)
+\<option  value=$option.Value
+			##if("{$oldObjectValue.get(${column.Name})}"=="{$option.Value}")
+			##selected='selected'
+			##end
+\>$option.Text</option>
+		#end
+</select>
+
+$!map.get("Onload")
+</div>

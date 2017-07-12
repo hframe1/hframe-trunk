@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring
+         http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd"
+       default-autowire="byName">
+
+    <!--<bean class="com.hframework.common.frame.cache.PropertyConfigurerUtils">-->
+        <!--<property name="locations">-->
+            <!--<list>-->
+                <!--&lt;!&ndash;<value>classpath:properties/dataSource.properties</value>&ndash;&gt;-->
+                <!--&lt;!&ndash;<value>classpath:properties/projectCreate.properties</value>&ndash;&gt;-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+
+    <bean class="com.hframework.common.frame.cache.PropertyConfigurerUtils">
+        <property name="locations">
+            <list>
+                <value>classpath:properties/projectCreate.properties</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>

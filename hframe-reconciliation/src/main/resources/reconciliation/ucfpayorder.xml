@@ -1,0 +1,117 @@
+<config>
+    <global>
+        <host id="targetHost">
+            <datasource type="ftp">127.0.0.1</datasource><!-- ftp -->
+            <username>test</username>
+            <password>test</password>
+            <cxtpath>/bills/M100000000/%-d{yyyy}/%-d{MM}</cxtpath>
+        </host>
+
+        <host id="selfHost">
+            <datasource type="db">jdbc:mysql://127.0.0.1:3306/beetle?useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true</datasource>
+            <username>beetle</username>
+            <password>NHY67ujm</password>
+        </host>
+    </global>
+    <services>
+        <service id="payorder">
+            <trigger type="cronExpression">0 0/3 * * * ?</trigger>
+            <importers>
+                <importer type="right">
+                    <host rel="targetHost"></host>
+                    <file path="/" name="%-d{yyyyMMdd}-Pay-M100000000.txt" tmpPath="D:/ftp">
+                        <row separator="|" type="descriptor" rowspan="1"></row>
+                        <row id="data"  type="data" rowspan="*" separator="|" ></row>
+                        <!--<row type="statistics" rowspan="1" express="COUNT:{} SUM:{}">-->
+                            <!--<item id="totalCount" >{1} </item>-->
+                            <!--<item id="totalAmount">{2}</item>-->
+                        <!--</row>-->
+                    </file>
+                </importer>
+                <importer type="left">
+                    <host rel="selfHost"></host>
+                    <dataset>
+                        <sql id = "data"><![CDATA[
+                               SELECT
+                                  info.orderid     AS merchantNo,
+                                  info.lmamount    AS amount,
+                                  (CASE WHEN order1.buystatus IN (1,3) THEN 'S' ELSE 'F' END) AS status,
+                                  order1.mtime     AS createTime,
+                                  order1.mtime     AS finishTime
+                                FROM lcs_luckymoney info
+                                  LEFT JOIN lcs_lmorderinfo order1
+                                    ON info.orderid = order1.orderid
+                                WHERE order1.buystatus IN (1,3,-1)
+                                    AND order1.creatime >= :beginDate
+                                    AND order1.creatime <= :endDate
+                        ]]> </sql>
+                        <!--<sql id = "totalAmount"><![CDATA[-->
+                             <!--SELECT  sum(info.lmamount)-->
+                                <!--FROM lcs_luckymoney info-->
+                                  <!--LEFT JOIN lcs_lmorderinfo order1-->
+                                    <!--ON info.orderid = order1.orderid-->
+                                <!--WHERE order1.buystatus IN (1,3,-1)-->
+                                    <!--AND order1.creatime >= :beginDate-->
+                                    <!--AND order1.creatime <= :endDate-->
+                        <!--]]></sql>-->
+                        <!--<sql id = "totalCount"><![CDATA[-->
+                              <!--SELECT  count(*)-->
+                                <!--FROM lcs_luckymoney info-->
+                                  <!--LEFT JOIN lcs_lmorderinfo order1-->
+                                    <!--ON info.orderid = order1.orderid-->
+                                <!--WHERE order1.buystatus IN (1,3,-1)-->
+                                    <!--AND order1.creatime >= :beginDate-->
+                                    <!--AND order1.creatime <= :endDate-->
+                        <!--]]></sql>-->
+                    </dataset>
+                </importer>
+            </importers>
+            <ruleCenter>
+                <!--<rule leftId="totalCount" rightId="totalCount"></rule>-->
+                <!--<rule leftId="totalAmount" rightId="totalAmount"></rule>-->
+                <!--<rule type="RIT"></rule>&lt;!&ndash; return if true &ndash;&gt;-->
+                <rule leftId="data" rightId="data">
+                    <datanode leftName="merchantNo" rightName="{2}" isKey="true"></datanode>
+                    <datanode leftName="amount" rightName="{5}" ></datanode>
+                    <datanode leftName="status" rightName="{7}"></datanode>
+                    <!--<datanode leftName="createTime" rightName="{8}"></datanode>-->
+                </rule>
+            </ruleCenter>
+            <exporters>
+                <exporter type="RIT"><!-- return if true 如果有值就返回，不在导出 -->
+                    <host rel="selfHost"/>
+                    <sql>SELECT 1 FROM lcs_ucfpay_compare t WHERE t.batch_id = ? and channel_code = ? and business_code = ?</sql>
+                    <dataitem>${BATCH_ID},[UCF_PAY],[PAY_ORDER]</dataitem>
+                </exporter>
+                <exporter>
+                    <host rel="selfHost"/>
+                    <sql>INSERT INTO lcs_ucfpay_compare(batch_id,channel_code,business_code,compare_state,compare_datetime,same_record_count,diff_record_count,self_single_count,third_single_count,balance_state,balance_datetime) VALUES (?,?,?,?,?,?,?,?,?,?,?);</sql>
+                    <dataitem>${BATCH_ID},[UCF_PAY],[PAY_ORDER],${COMPARE_STATE},${COMPARE_DATETIME},${SAME_RECORD_COUNT},${DIFF_RECORD_COUNT},${SELF_SINGLE_COUNT},${THIRD_SINGLE_COUNT},${BALANCE_STATE},${BALANCE_DATETIME}</dataitem>
+                    <scope>all</scope><!-- all:全量比对结果，diff:差量比对结果 self:自己的数据 target: 对端数据 -->
+                    <leftId>data</leftId>
+                </exporter>
+                <exporter>
+                    <host rel="selfHost"/>
+                    <sql>INSERT INTO lcs_ucfpay_compare_detail(order_id,amount,pay_date,result,compare_date,STATUS,remark,data_source,batch_id) VALUES (?,?,?,?,?,?,?,?,?);</sql>
+                    <dataitem>merchantNo,amount,createTime,status,${now},${status},${remark},[SELF],${BATCH_ID}</dataitem>
+                    <scope>all</scope><!-- all:全量比对结果，diff:差量比对结果 self:自己的数据 target: 对端数据 -->
+                    <leftId>data</leftId>
+                </exporter>
+                <exporter>
+                    <host rel="selfHost"/>
+                    <sql>INSERT INTO lcs_ucfpay_compare_detail(order_id,amount,pay_date,result,compare_date,STATUS,remark,data_source,batch_id) VALUES (?,?,?,?,?,?,?,?,?);</sql>
+                    <dataitem>{2},{5},{8},{7},${now},${status},${remark},[THIRD],${BATCH_ID}</dataitem>
+                    <scope>all</scope><!-- all:全量比对结果，diff:差量比对结果 self:自己的数据 target: 对端数据 -->
+                    <rightId>data</rightId>
+                </exporter>
+
+                <!--<exporter>-->
+                    <!--<host rel="targetHost"/>-->
+                    <!--<file path="/order/his/" name="order_YYYYMMDD_his.txt" parser=""></file>-->
+                    <!--<dataitem>商户号,商户订单号,金额,状态,交易完成时间,${status}</dataitem>-->
+                    <!--<scope>all</scope>&lt;!&ndash; all:全量比对结果，diff:差量比对结果  self:自己的数据 target:对端数据&ndash;&gt;-->
+                <!--</exporter>-->
+            </exporters>
+        </service>
+    </services>
+</config>

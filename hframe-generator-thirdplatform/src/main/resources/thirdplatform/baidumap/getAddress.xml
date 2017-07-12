@@ -1,0 +1,135 @@
+<interfaceExample>
+    <name>getAddress</name>
+    <url>
+        <![CDATA[
+            http://api.map.baidu.com/geocoder/v2?address=fdsafdsafdsafd&name=张三
+        ]]>
+        </url>
+    <requestMessage>
+        <![CDATA[
+            {
+              "data": {
+                "beenSettled": "0元",
+                "couponInfoStr": "WHDZRC|5.00",
+                "couponRateStr": "5.00",
+                "couponStr": "WHDZRC",
+                "customerNum": "4",
+                "investingNum": "3",
+                "isSetedPhoto": "1",
+                "mail": "yuanfen1314@163.com",
+                "mailShow": "yu********@163.com",
+                "mobileShow": "145****431",
+                "newCouponStr": "WHDZRC",
+                "org": "xxw理财师专职组",
+                "partTimeLcsCnt": "0",
+                "profitTotal": "0元",
+                "realName": "刘兰",
+                "refererRebateText": "6.00",
+                "tobeSettled": "0元",
+                "userId": "1500012",
+                "userName": "m14538477431",
+                "userPhoto": "http://*******/fp/avatar"
+              },
+              "errorCode": 0,
+              "errorMsg": "成功"
+            }
+        ]]>
+    </requestMessage>
+    <responseMessage>
+        <![CDATA[
+            {
+              "err_code": "0",
+              "err_msg": "",
+              "data": {
+                "page": {
+                  "pageNo": 1,
+                  "pageSize": 10
+                },
+                "total": 8,
+                "data": [
+                  {
+                    "createTime": "2016-04-11",
+                    "realName": "滕渔癸",
+                    "userName": "dcwweq",
+                    "userId": "1500256",
+                    "referRealName": "美丽",
+                    "referUserName": "m14548588491",
+                    "referUserId": "1500123",
+                    "referShortAlias": "AAHDZUR"
+                  },
+                  {
+                    "createTime": "2016-04-08",
+                    "realName": "艾对",
+                    "userName": "vjqdtf",
+                    "userId": "1500250",
+                    "referRealName": "美丽",
+                    "referUserName": "m14548588491",
+                    "referUserId": "1500123",
+                    "referShortAlias": "AAHDZUR"
+                  },
+                  {
+                    "createTime": "2016-04-07",
+                    "realName": "巴俺迮",
+                    "userName": "lqvxzb",
+                    "userId": "1500182",
+                    "referRealName": "美丽",
+                    "referUserName": "m14548588491",
+                    "referUserId": "1500123",
+                    "referShortAlias": "AAHDZUR"
+                  },
+                  {
+                    "createTime": "2016-04-07",
+                    "realName": "好美",
+                    "userName": "m14548477421",
+                    "userId": "1500161",
+                    "referRealName": "美丽",
+                    "referUserName": "m14548588491",
+                    "referUserId": "1500123",
+                    "referShortAlias": "AAHDZUR"
+                  },
+                  {
+                    "createTime": "2016-04-06",
+                    "realName": "朋友",
+                    "userName": "m14539300392",
+                    "userId": "1500150",
+                    "referRealName": "美丽",
+                    "referUserName": "m14548588491",
+                    "referUserId": "1500123",
+                    "referShortAlias": "AAHDZUR"
+                  },
+                  {
+                    "createTime": "2016-04-06",
+                    "realName": "美好",
+                    "userName": "m14538477478",
+                    "userId": "1500136",
+                    "referRealName": "美丽",
+                    "referUserName": "m14548588491",
+                    "referUserId": "1500123",
+                    "referShortAlias": "AAHDZUR"
+                  },
+                  {
+                    "createTime": "2016-04-06",
+                    "realName": "美乐",
+                    "userName": "m14548499041",
+                    "userId": "1500127",
+                    "referRealName": "美丽",
+                    "referUserName": "m14548588491",
+                    "referUserId": "1500123",
+                    "referShortAlias": "AAHDZUR"
+                  },
+                  {
+                    "createTime": "2016-04-06",
+                    "realName": "妹子",
+                    "userName": "m14548744930",
+                    "userId": "1500125",
+                    "referRealName": "美丽",
+                    "referUserName": "m14548588491",
+                    "referUserId": "1500123",
+                    "referShortAlias": "AAHDZUR"
+                  }
+                ]
+              }
+            }
+        ]]>
+    </responseMessage>
+</interfaceExample>

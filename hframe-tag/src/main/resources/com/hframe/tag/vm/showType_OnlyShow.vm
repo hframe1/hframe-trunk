@@ -1,0 +1,89 @@
+#set($widthStype='')
+#set($showType1=$column.ShowType)
+#if(!$null.isNull($showType1))
+$!column.ShowType.PreStr
+#end
+#if($column.ShowType.Width!=0)
+		#set($widthStype="width:$column.ShowType.Width")
+#end
+##只有一个类型的时候
+#if($column.ShowType.Type=='input')
+
+	#########################if($null.isNull($oldObjectValue.get(${column.Name})))这种方法无效，为什么呢
+	#if($oldObjectValue.get(${column.Name}))
+	 	$oldObjectValue.get(${column.Name})
+	#end
+
+#elseif($column.ShowType.Type=='select')
+
+		#foreach($option in $column.ShowType.optionList)
+			#if("{$oldObjectValue.get(${column.Name})}"=="{$option.Value}")
+				$option.Text
+			#end
+		#end
+
+#elseif($column.ShowType.Type=='openwin')
+	#if($oldObjectValue.get(${column.Name}))
+	 	$oldObjectValue.get(${column.Name})
+	#end
+	<img src="test/fangdajing.jpg" width="20" height="20" class="magnifier_img_sys">
+		#elseif($column.ShowType.Type=='datetime')
+	$!oldObjectValue.get(${column.Name})
+#else
+	#####	#if($oldObjectValue.get(${column.Name}))
+	##### 		$oldObjectValue.get(${column.Name})
+	#####	#end
+#end
+#if(!$null.isNull($showType1))
+$!column.ShowType.AfterStr
+#end
+##拥有多个类型的时候
+
+
+#foreach($showType in $column.ShowTypes)
+	#if(!$null.isNull($showType.PreStr))
+	$!showType.PreStr
+	#end
+	
+	#if($showType.Width!=0)
+		#set($widthStype="width:$showType.Width")
+	#end
+	
+	#if($showType.Type=='input')
+	
+		<input name='$column.Name' style='$widthStype'  value='$oldObjectValue.get(${column.Name})'/>
+	
+	
+	#elseif($showType.Type=='select')
+			#set($selectCount=$velocityCount)
+	
+			#foreach($option in $showType.optionList)
+						####[$option.Value --$oldObjectValue.get(${column.Name}).get($selectCount)--$velocityCount]
+				#if($option.Value==$oldObjectValue.get(${column.Name}).get($selectCount))
+					$option.Text-
+				#end
+				
+			#end
+	
+	#elseif($showType.Type=='openwin')
+		<input name='$column.Name' disabled='disabled' style='$widthStype'/><img src="test/fangdajing.jpg" width="20" height="20" class="magnifier_img_sys">
+	#elseif($column.ShowType.Type=='datetime')
+	$oldObjectValue.get(${column.Name})
+	#else  ##这种情况是checkbox
+	
+	#foreach($val in $oldObjectValue.get(${column.Name}))
+	
+		#if($val==$showType.value)
+		
+			#if(!$null.isNull($showType.AfterStr))
+				$!showType.AfterStr
+			#end
+		#end
+	
+	#end
+	
+	
+	
+	#end
+	
+#end

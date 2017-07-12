@@ -1,0 +1,30 @@
+<interfaceExample>
+    <name>getUserInfo</name>
+    <url>
+        <![CDATA[
+            http://[HOST]/user/getUserInfo?client_id=lcs&timestamp=1461139244&sign=6ce7a626c836c59f620025fe6fe9efbe&access_token=0070f6d404c2c2955e9c2a0ba01001efda166b7d
+      ]]>
+        </url>
+    <requestMessage>
+        <![CDATA[
+
+        ]]>
+    </requestMessage>
+    <responseMessage>
+        <![CDATA[
+        {
+            errorCode: 0,
+            errorMsg: "",
+            data: {
+                open_id: "4f49426d797a4151747941236e6f3455234c557632415f",
+                user_id: 3,
+                real_name: "任丽媛test3",
+                mobile: "18910658526",
+                idno: "452723198503246585",
+                balance: 12345
+            },
+            sessionId: ""
+        }
+        ]]>
+    </responseMessage>
+</interfaceExample>

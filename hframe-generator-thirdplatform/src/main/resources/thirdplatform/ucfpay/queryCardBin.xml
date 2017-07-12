@@ -1,0 +1,17 @@
+<interfaceExample>
+    <name>queryCardBin</name>
+    <url>
+        <![CDATA[
+            http://111.203.205.26:8085/gateway.do?service=MOBILE_CERTPAY_OUT_QUERY_CARD_BIN&secId=RSA&version=3.0.0&reqSn=132434&merchantId=AAAA&bankCardNo=6226090107757003&sign=fdsafdsafds
+        ]]>
+        </url>
+    <requestMessage>
+        <![CDATA[
+        ]]>
+    </requestMessage>
+    <responseMessage>
+        <![CDATA[
+         {"bankName":"招商银行","cardType":"1","bankCardNo":"6226090107757003","bankCode":"CMB","status":"00","respMsg":"成功"}
+        ]]>
+    </responseMessage>
+</interfaceExample>

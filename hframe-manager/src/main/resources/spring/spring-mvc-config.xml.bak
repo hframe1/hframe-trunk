@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 组件自动扫描 （注解） -->
+    <context:component-scan base-package="com.hframe">
+        <context:include-filter type="regex" expression="com.hframe.controller.*"/>
+    </context:component-scan>
+    <!-- Configures support for @Controllers -->
+    <mvc:annotation-driven/>
+    <context:annotation-config/>
+    <!-- 对静态资源文件的访问 -->
+    <mvc:default-servlet-handler/>
+
+    <!-- 视图解释类 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <!--<property name="prefix" value="/WEB-INF/page/"/>-->
+        <property name="prefix" value="/page/"/>
+        <!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑  -->
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+    <!-- 文件上传类 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="maxUploadSize" value="10485760000"/>
+        <property name="maxInMemorySize" value="40960"/>
+    </bean>
+    <!--微信业务异常处理-->
+    <!-- TODO
+    <bean id="weixinExceptionResolver" class="com.ourangel.box.mvc.interceptor.WeixinExceptionResolver" />
+    -->
+    <!-- 查询分页拦截器 TODO
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="methodPointcut" expression="execution (* com.ourangel.box.mvc.controller..*(..))"/>
+        <aop:advisor advice-ref="methodInterceptorBySpring" pointcut-ref="methodPointcut"/>
+    </aop:config>
+-->
+    <!-- 拦截器 TODO
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/platformedm/*" />
+            <mvc:mapping path="/platformstore/*" />
+            <mvc:mapping path="/platformuser/*" />
+            <mvc:mapping path="/platformAddress/*" />
+            <mvc:mapping path="/platformcenter/*" />
+            <bean class="com.ourangel.box.mvc.interceptor.PlatformUserInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+-->
+</beans>

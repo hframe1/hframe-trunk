@@ -1,0 +1,51 @@
+##第一部分：传入参数
+
+
+#set($map=$MAP)
+#set($oldObjectsValue=$map.get("oldObjectsValue"))
+
+
+
+##模板内容
+<table class='zqh_grid' id='$map.get("GridId")'  style='width: $map.get("Width");'>
+ <form action='/$!map.get("Url")' method='post' id='$map.get("FormId")_GRID'>
+	<thead>
+		<tr>
+			<td colspan=100% class='zqh_grid_title'>$map.get("Title")</td>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr>
+		
+			#foreach($column in $map.get("columnsList"))
+			<th class='zqh_grid_column'  >$column.Name</th>
+			#end
+		</tr>
+		
+		
+		#foreach($oldObjectValue in $oldObjectsValue)
+		<tr>
+				#foreach($column in $map.get("columnsList"))
+			<td  style='width:$column.FiledWidth'>
+			
+			#if($map.get("Editable")=='text')
+				#parse("com/hframe/tag/vm/showType_OnlyShow.vm")
+			#else
+				#parse("com/hframe/tag/vm/showType_FORGRID.vm")
+			#end
+			#if($column.Nullable==0)
+				#parse("com/hframe/tag/vm/redstar.vm")
+			#end
+			</td>
+			#end
+		</tr>
+	    #end
+	</tbody>
+	<tfoot>
+				<tr>
+					<td class='zqh_form_footer' colspan=100%><input class="zqh_form_submit" type="submit" value="提交"><input class="zqh_form_add" type="button" value="添加一行" onclick="btnClk_Sys(this,'current-addOneRow','test/createDialog.jsp',0,'{param=?&targetObj=&targetType=}')"> </td>
+				</tr>
+			</tfoot>
+</form>
+</table>

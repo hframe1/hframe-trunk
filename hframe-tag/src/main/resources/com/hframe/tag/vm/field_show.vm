@@ -1,0 +1,17 @@
+
+
+#if($field.Type=='text')
+
+	$field.ShowExp
+#elseif($field.Type=='href')
+
+	<a href='$field.HiddenExp'>$field.ShowExp</a>
+#elseif($field.Type=='checkbox')
+	<input name='$map.get("ListId")_INPUT' type='$field.Type' value='$field.HiddenExp'/>
+#elseif($field.Type=='radio')
+	<input name='$map.get("ListId")_INPUT' type='$field.Type' value='$field.HiddenExp' />
+#else
+	<input name=$map.get("ListId")_INPUT'' type='$field.Type' value='$field.HiddenExp' />
+#end
+
+

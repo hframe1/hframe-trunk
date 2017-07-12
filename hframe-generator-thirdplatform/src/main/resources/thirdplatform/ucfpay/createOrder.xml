@@ -1,0 +1,28 @@
+<interfaceExample>
+    <name>createOrder</name>
+    <url>
+        <![CDATA[
+            http://sandbox.firstpay.com/security/gateway.do?service=REQ_PAY_QUICK_APPLY&secId=RSA&version=3.0.0&reqSn=132434&merchantId=AAAA&merchantNo=342343&payerId=23443&amount=123&transCur=156&certificateType=0&certificateNo=511321198708084072&accountNo=6226090107757003&accountName=张三丰&mobileNo=18610655490&bankId=ICBC&bankName=工商银行&productName=网信理财红包&productInfo=网信理财红包信息&noticeUrl=http.www.baidu.com&expireTime=20160428000000&memo=fsdjkalfdjsafjdsal&sign=fdsafdsafds
+        ]]>
+        </url>
+    <requestMessage>
+        <![CDATA[
+        ]]>
+    </requestMessage>
+    <responseMessage>
+        <![CDATA[
+         {
+            "resCode": "00000",
+            "resMessage": "成功",
+            "merchantId": "10000009999",
+            "merchantNo": "20150109022501484",
+            "tradeNo": "201501151426021031610000004010",
+            "status": "S",
+            "tradeTime": "20150115142602",
+             "amount": "123",
+            "transCur": "156",
+            "memo": ""
+         }
+        ]]>
+    </responseMessage>
+</interfaceExample>

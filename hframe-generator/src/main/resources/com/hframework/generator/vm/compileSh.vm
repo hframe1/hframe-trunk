@@ -1,0 +1,6 @@
+#set($map=$MAP)
+#set($companyCode = $map.get("companyCode"))
+#set($programCode = $map.get("programCode"))
+D:
+cd /my_workspace/$!{companyCode}-$programCode
+mvn compile

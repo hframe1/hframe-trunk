@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<descriptor>
+    <global>
+        <staticParameters>
+            <staticParameter>test_model</staticParameter>
+            <staticParameter>domain</staticParameter>
+            <staticParameter>secKey</staticParameter>
+            <staticParameter>orderExpiredTime</staticParameter>
+            <staticParameter>secId</staticParameter>
+            <staticParameter>version</staticParameter>
+            <staticParameter>merchantId</staticParameter>
+            <staticParameter>transCur</staticParameter>
+            <staticParameter>certificateType</staticParameter>
+            <staticParameter>orderNoticeUrl</staticParameter>
+
+            <staticParameter>authPay_merchantId</staticParameter>
+            <staticParameter>authPay_secKey</staticParameter>
+
+
+        </staticParameters>
+        <properties>
+            <javaPackage>com.ucfgroup.client.ucfpay</javaPackage>
+            <clientName>*Client</clientName>
+            <resourceFolder>third</resourceFolder>
+            <beanOrganizeInterfaceBase>true</beanOrganizeInterfaceBase>
+        </properties>
+        <rules>
+            <rule id="getReqSn" type="encrypt"><![CDATA[
+                //TODO
+            ]]></rule>
+            <rule id="getOrderExpiredTime" type="encrypt"><![CDATA[
+                //TODO
+            ]]></rule>
+            <rule id="encryptSign" type="encrypt"><![CDATA[
+                Rules.checkAllNotEmptyParamsSign(${this},"&key=" + #{secKey})
+            ]]></rule>
+            <rule id="authPayEncryptSign" type="encrypt"><![CDATA[
+                Rules.checkAllNotEmptyParamsSign(${this},"&key=" + #{authPay_secKey})
+            ]]></rule>
+            <rule id="decryptSign" type="encrypt"><![CDATA[
+                //TODO
+            ]]></rule>
+        </rules>
+        <requestConfig>
+            <publicParameters>
+                <parameter name="secId" type="String" nullable="false" visiable="false" ruleId="" value="#{secId}"/>
+                <parameter name="version" type="String" nullable="false" visiable="false" ruleId="" value="#{version}"/>
+                <parameter name="merchantId" type="String" nullable="false" visiable="false" ruleId="" value="#{merchantId}"/>
+                <parameter name="reqSn" type="String" nullable="false"  visiable="false"  ruleId="getReqSn" value="" />
+                <parameter name="sign" type="String" nullable="false" visiable="false" ruleId="encryptSign" value=""/>
+            </publicParameters>
+        </requestConfig>
+        <responseConfig>
+        </responseConfig>
+    </global>
+    <interfaces>
+        <interface  path="" name="createOrder"  method="post" usePublicParams ="true" template="ucfpay/createOrder.xml">
+            <request>
+                <parameters>
+                    <parameter name="service" type="String" nullable="false"  visiable="false"  ruleId="" value="REQ_PAY_QUICK_APPLY" />
+                    <parameter name="expireTime" type="String" nullable="false"  visiable="false"  ruleId="getOrderExpiredTime" value="" />
+                    <parameter name="noticeUrl" type="String" nullable="false"  visiable="false"  ruleId="" value="#{orderNoticeUrl}" />
+                    <parameter name="transCur" type="String" nullable="false" visiable="false" ruleId="" value="#{transCur}"/>
+                    <parameter name="certificateType" type="String" nullable="false" visiable="false" ruleId="" value="#{certificateType}"/>
+                    <parameter name="merchantNo" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="payerId" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="amount" type="long" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="certificateNo" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="accountNo" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="accountName" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="mobileNo" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="productName" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="productInfo" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="memo" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                </parameters>
+            </request>
+            <response load="body" extend="false" message="json" beanName = "UcfPayResult">
+            </response>
+        </interface>
+
+        <interface  path="" name="confirmOrder"  method="post" usePublicParams ="true" template="ucfpay/confirmOrder.xml">
+            <request>
+                <parameters>
+                    <parameter name="service" type="String" nullable="false"  visiable="false"  ruleId="" value="REQ_PAY_QUICK_CONFIRM" />
+                    <parameter name="merchantNo" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="checkCode" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                </parameters>
+            </request>
+            <response load="body" extend="false" message="json" beanName = "UcfPayResult">
+            </response>
+        </interface>
+
+        <interface  path="" name="resendSms"  method="post" usePublicParams ="true" template="ucfpay/resendSms.xml">
+            <request>
+                <parameters>
+                    <parameter name="service" type="String" nullable="false"  visiable="false"  ruleId="" value="REQ_PAY_QUICK_RESEND" />
+                    <parameter name="merchantNo" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                </parameters>
+            </request>
+            <response load="body" extend="false" message="json" beanName = "UcfPayResult">
+            </response>
+        </interface>
+
+        <interface  path="" name="queryCardBin"  method="post" usePublicParams ="false" template="ucfpay/queryCardBin.xml">
+            <request>
+                <parameters>
+                    <parameter name="secId" type="String" nullable="false" visiable="false" ruleId="" value="#{secId}"/>
+                    <parameter name="version" type="String" nullable="false" visiable="false" ruleId="" value="#{version}"/>
+                    <parameter name="merchantId" type="String" nullable="false" visiable="false" ruleId="" value="#{authPay_merchantId}"/>
+                    <parameter name="reqSn" type="String" nullable="false"  visiable="false"  ruleId="getReqSn" value="" />
+                    <parameter name="service" type="String" nullable="false"  visiable="false"  ruleId="" value="MOBILE_CERTPAY_OUT_QUERY_CARD_BIN" />
+                    <parameter name="bankCardNo" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="sign" type="String" nullable="false" visiable="false" ruleId="authPayEncryptSign" value=""/>
+                </parameters>
+            </request>
+            <response load="body" extend="false" message="json" beanName = "UcfPayCardBinResult">
+            </response>
+        </interface>
+
+
+        <interface  path="" name="queryOrder"  method="post" usePublicParams ="true" template="ucfpay/queryOrder.xml">
+            <request>
+                <parameters>
+                    <parameter name="service" type="String" nullable="false"  visiable="false"  ruleId="" value="REQ_QUICK_QUERY_BY_ID" />
+                    <parameter name="merchantNo" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                </parameters>
+            </request>
+            <response load="body" extend="false" message="json" beanName = "UcfPayResult">
+            </response>
+        </interface>
+
+
+
+    </interfaces>
+</descriptor>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<descriptor>
+    <global>
+        <staticParameters>
+            <staticParameter>test_model</staticParameter>
+            <staticParameter>zk</staticParameter>
+            <staticParameter>domain</staticParameter>
+        </staticParameters>
+        <properties>
+            <javaPackage>com.hframe.client.baidumap</javaPackage>
+            <clientName>*Client</clientName>
+            <resourceFolder>third</resourceFolder>
+            <beanOrganizeInterfaceBase>true</beanOrganizeInterfaceBase>
+        </properties>
+        <rules>
+            <rule id="encryptAES" type="encrypt">MD5((+)AES(${this},#{zk}))</rule>
+            <rule id="decryptAES" type="decrypt">(-)AES(${this},#{zk})</rule>
+            <rule id="md5" type="encrypt">MD5(${address}${mobile}#{zk})</rule>
+            <!--<rule id="mobileMapping" type="mapping">com.hframe.client.mapping.MobileValueMapper</rule>-->
+            <rule id="mobileMapping" type="mapping">MobileValueMapper</rule>
+
+            <rule id="userIdMapping" type="mapping">UserIdValueMapper</rule>
+            <rule id="cityCodeMapping" type="mapping">CityCodeValueMapper</rule>
+            <rule id="productIdMapping" type="mapping">ProductIdValueMapper</rule>
+            <rule id="serviceInstanceIdMapping" type="mapping">ServiceInstanceIdValueMapper</rule>
+        </rules>
+        <requestConfig>
+            <valueMappers>
+                <valueMapper name="mobile"  ruleId="MobileMapping" value=""/>
+            </valueMappers>
+            <publicParameters>
+                <parameter name="sign" type="String" nullable="false" visiable="false" ruleId="SignMd5" value=""/>
+            </publicParameters>
+            <publicNodes>
+                <node name="sign" type="String" nullable="false" visiable="false" ruleId="SignMd5" value=""/>
+            </publicNodes>
+        </requestConfig>
+        <responseConfig>
+            <valueMappers>
+                <valueMapper path="**/mobile"  ruleId="MobileMapping" value=""/>
+            </valueMappers>
+            <publicNodes>
+                <node path="/" type="BaiduMapResult" nullable="false" visiable="false" ruleId="SignMd5" value="">
+                    <node path="errorCode"></node>
+                    <node path="errorMsg"></node>
+                    <node path="data" type="generic"></node>
+                    <!--<exclude express="data/*"></exclude>-->
+                </node>
+                <node path="**/attr;**/attr/**"  isFloatNode="true"></node>
+                <node path="**/prod;**/attr/prod" type="Attribute" isFloatNode="true"></node>
+            </publicNodes>
+        </responseConfig>
+    </global>
+    <interfaces>
+        <interface  path="geocoder/v2" name="getAddress"  method="post" usePublicParams ="true" template="baidumap/getAddress.xml">
+            <request load="head#body" message="json">
+                <parameters>
+                    <parameter name="address" type="String" nullable="false"  visiable="true"  ruleId="" value="${address}" />
+                    <parameter name="mobile" type="long" nullable="false" visiable="ture"  ruleId="" value="(+)AES(${this},$${SECRET_KEY})" />
+                    <parameter name="output"  type="String"  nullable="false" visiable="false"  ruleId="" value="json" />
+                    <parameter name="ak"  type="String"  nullable="false" visiable="false"  ruleId="" value="#{ak}" />
+                    <parameter name="sign" type="String" nullable="false" visiable="false"  ruleId="md5" value="MD5(${address}${mobile}$${AK})" />
+                </parameters>
+                <nodes>
+                    <node path="*" type="" merge="true"/>
+                    <node path="*" type="" merge="true"/>
+                </nodes>
+            </request>
+            <response load="body" extend="false" message="json">
+                <node path="data/**"  type="HfcfgLoginPage" />
+                <node path="**/mobile"  type="HfcfgLoginPage" ruleId="" value="(-)AES(${this},$${SECRET_KEY})" />
+            </response>
+        </interface>
+        <interface  path="geocoder/v2" name="getAddress2"  method="post" usePublicParams ="true">
+        </interface>
+    </interfaces>
+</descriptor>

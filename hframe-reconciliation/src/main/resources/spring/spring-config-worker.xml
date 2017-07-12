@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="true">
+        <property name="triggers">
+            <list>
+                <ref bean="ucfPayComp4PayTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- quartz-2.x的配置 -->
+    <bean id="ucfPayComp4PayTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" depends-on="ucfPayCompareJob">
+        <property name="jobDetail">
+            <ref bean="ucfPayCompareJob" />
+        </property>
+        <property name="cronExpression">
+            <value>0 0/1 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- job的配置开始 -->
+    <bean id="ucfPayCompareJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean" depends-on="ucfPayCompareService">
+        <property name="targetObject">
+            <ref bean="ucfPayCompareService" />
+        </property>
+        <property name="targetMethod">
+            <value>process</value>
+        </property>
+        <property name="concurrent" value="false" />
+    </bean>
+
+    <bean id="ucfPayCompareService" class="com.hframework.reconciliation.core.ServerDecorate">
+        <property name="configName" value="ucfpayorder.xml"></property>
+    </bean>
+</beans>

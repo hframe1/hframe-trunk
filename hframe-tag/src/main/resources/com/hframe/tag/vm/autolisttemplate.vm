@@ -1,0 +1,45 @@
+##第一部分：传入参数
+
+
+#set($map=$MAP)
+#set($oldObjectsValue=$map.get("oldObjectsValue"))
+
+
+
+##模板内容
+<input id='$map.get("ListId")_TAGINFO'  name='$map.get("ListId")_TAGINFO' type='hidden' value='$map.get("TagInfo")'/>
+<table class='zqh_list' id='$map.get("ListId")'  style='width: $map.get("Width");'>
+
+	<thead>
+		<tr>
+			<td colspan=100% class='zqh_list_title'>$map.get("Title")</td>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr>
+		
+			#foreach($field in $map.get("fieldsList"))
+			<th class='zqh_list_field'  >$field.Title</th>
+			#end
+		</tr>
+		
+		
+		#foreach($fsList in $oldObjectsValue)
+		<tr>
+				#foreach($field in $fsList)
+			<td  style=''>  ####width:$field.FiledWidth
+			
+				#parse("com/hframe/tag/vm/field_show.vm")
+			</td>
+			#end
+		</tr>
+	    #end
+	</tbody>
+	<tfoot>
+				<tr>
+					<td class='zqh_list_footer' colspan=100%>$map.get("PaginationDisplay")</td>
+				</tr>
+			</tfoot>
+
+</table>

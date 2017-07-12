@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties url="file:///D:/my_workspace/hframe-trunk/hframe-core/src/main/resources/properties/dataSource.properties"></properties>
+    <!-- <classPathEntry location="E:\\Users\\zhangqh6\\.m2\\repository\\mysql\\mysql-connector-java\\5.1.21\\mysql-connector-java-5.1.21.jar"/> -->
+    <context id="default" targetRuntime="MyBatis3">
+
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$" />
+            <property name="replaceString" value="_Example" />
+        </plugin>
+
+        <plugin type="com.hframework.generator.web.mybatis.plugins.PaginationPlugin"></plugin>
+        <plugin type="com.hframework.generator.web.mybatis.plugins.JointQueryPlugin"></plugin>
+        <plugin type="com.hframework.generator.web.mybatis.plugins.MapperAnnotationPlugin"></plugin>
+        <plugin type="com.hframework.generator.web.mybatis.plugins.NoParamConstructorPlugin"></plugin>
+        <plugin type="com.hframework.generator.web.mybatis.plugins.MapperXmlOverwritePlugin"></plugin>
+
+
+        <commentGenerator type="com.hframework.generator.web.mybatis.override.MybatisCommentGenerator">
+            <property name="suppressAllComments" value="true" />
+            <property name="suppressDate" value="false" />
+        </commentGenerator>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/db1?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull" userId="root" password="${jdbc.password}">
+        </jdbcConnection>
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <!-- BO 对象实体 -->
+        <javaModelGenerator targetPackage="com.hframe.domain.model" targetProject="D:/my_workspace/hframe-test/\hframe-core/src/main/java">
+            <property name="constructorBased" value="true"/>
+            <property name="enableSubPackages" value="false"/>
+            <property name="immutable" value="true"/>
+            <!--<property name="rootClass" value="com.foo.louis.Hello"/> -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- mapper配置文件 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="D:/my_workspace/hframe-test/\hframe-core/src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!-- DAO 对象实体 -->
+        <!-- ANNOTATEDMAPPER  MIXEDMAPPER   XMLMAPPER-->
+        <javaClientGenerator targetPackage="com.hframe.dao" targetProject="D:/my_workspace/hframe-test/\hframe-core/src/main/java" type="XMLMAPPER">
+            <property name="enableInsert" value="true"/>
+            <property name="enableSubPackages" value=""/>
+            <property name="exampleMethodVisibility" value="false"/>
+            <property name="methodNameCalculator" value=""/>
+            <property name="rootInterface" value=""/>
+        </javaClientGenerator>
+
+         <table schema="" tableName="hfsec_user_authorize">
+            <property name="chineseName" value="用户授权"></property>
+            <property name="parentId" value=""></property>
+            <generatedKey column="hfsec_user_authorize_id" sqlStatement="MySql" identity="true" />
+
+
+        </table>
+        <table schema="" tableName="hfmd_enum_class">
+            <property name="chineseName" value="字典"></property>
+            <property name="parentId" value=""></property>
+            <generatedKey column="hfmd_enum_class_id" sqlStatement="MySql" identity="true" />
+
+
+        </table>
+        <table schema="" tableName="hfsec_menu">
+            <property name="chineseName" value="菜单"></property>
+            <property name="parentId" value="parent_hfsec_menu_id"></property>
+            <generatedKey column="hfsec_menu_id" sqlStatement="MySql" identity="true" />
+
+
+        </table>
+        <table schema="" tableName="hfsec_role">
+            <property name="chineseName" value="角色"></property>
+            <property name="parentId" value=""></property>
+            <generatedKey column="hfsec_role_id" sqlStatement="MySql" identity="true" />
+
+
+        </table>
+        <table schema="" tableName="order">
+            <property name="chineseName" value="订单"></property>
+            <property name="parentId" value=""></property>
+            <generatedKey column="order_id" sqlStatement="MySql" identity="true" />
+
+
+        </table>
+        <table schema="" tableName="hfsec_user">
+            <property name="chineseName" value="用户"></property>
+            <property name="parentId" value=""></property>
+            <generatedKey column="hfsec_user_id" sqlStatement="MySql" identity="true" />
+
+
+        </table>
+        <table schema="" tableName="hfsec_role_authorize">
+            <property name="chineseName" value="角色授权"></property>
+            <property name="parentId" value=""></property>
+            <generatedKey column="hfsec_role_authorize_id" sqlStatement="MySql" identity="true" />
+
+
+        </table>
+        <table schema="" tableName="hfsec_organize">
+            <property name="chineseName" value="组织"></property>
+            <property name="parentId" value="parent_hfsec_organize_id"></property>
+            <generatedKey column="hfsec_organize_id" sqlStatement="MySql" identity="true" />
+
+
+        </table>
+        <table schema="" tableName="hfmd_enum">
+            <property name="chineseName" value="字典项"></property>
+            <property name="parentId" value=""></property>
+            <generatedKey column="hfmd_enum_id" sqlStatement="MySql" identity="true" />
+
+
+        </table>
+
+
+
+
+    </context>
+</generatorConfiguration>

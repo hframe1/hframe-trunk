@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<descriptor>
+    <global>
+        <staticParameters>
+            <staticParameter>test_model</staticParameter>
+            <staticParameter>client</staticParameter>
+            <staticParameter>sign_type</staticParameter>
+            <staticParameter>key</staticParameter>
+        </staticParameters>
+        <properties>
+            <javaPackage>com.ucfgroup.client.beetle</javaPackage>
+            <clientName>*Client</clientName>
+            <resourceFolder>third</resourceFolder>
+            <beanOrganizeInterfaceBase>true</beanOrganizeInterfaceBase>
+        </properties>
+        <rules>
+            <rule id="getCurTimestamp" type="encrypt">Rules.getTimeStamp()</rule>
+            <rule id="sign" type="encrypt"><![CDATA[
+                Rules.signAllParams(${this},#{key})
+            ]]></rule>
+        </rules>
+        <requestConfig>
+            <publicParameters>
+                <parameter name="client" type="String" nullable="false" visiable="false" ruleId="" value="#{client}"/>
+                <parameter name="sign_type" type="String" nullable="false" visiable="false" ruleId="" value="#{sign_type}"/>
+                <parameter name="time" type="String" nullable="false" visiable="false" ruleId="getCurTimestamp" value=""/>
+                <parameter name="sign" type="String" nullable="false" visiable="false" ruleId="sign" value=""/>
+            </publicParameters>
+        </requestConfig>
+        <responseConfig>
+            <publicNodes>
+                <node path="/" type="BeetleResult" >
+                    <node path="errorCode"></node>
+                    <node path="errorMsg"></node>
+                    <node path="data" type="generic"></node>
+                </node>
+            </publicNodes>
+        </responseConfig>
+    </global>
+    <interfaces>
+        <interface  path="/apibeetle/get_node_info" name="getNodeInfo"  method="get" usePublicParams ="true" template="beetle/get_node_info.xml">
+            <request>
+                <parameters>
+                    <parameter name="node" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                </parameters>
+            </request>
+            <response extend="false" message="json" beanName = "GetNodeInfoResponse">
+                <node path="/data/secondid_list" type="Map" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="">
+                    <!--<node path="/data/groups/*" type="GroupItem" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="" />-->
+                </node>
+            </response>
+        </interface>
+        <interface  path="/apibeetle/get_node_data" name="getNodeData"  method="get" usePublicParams ="true" template="beetle/get_node_data.xml">
+            <request>
+                <parameters>
+                    <parameter name="node" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="cycle" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="isleaf" type="int" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="p2p_id" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                </parameters>
+            </request>
+            <response extend="false" message="json" beanName = "GetNodeDataResponse">
+                <node path="/data/groups" type="Map" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="">
+                    <node path="/data/groups/*" type="GroupItem" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="" />
+                </node>
+                <node path="/data/info/secondid_list" type="Map" nullable="false" visiable="false" isFloatNode="true" ruleId="" value=""></node>
+            </response>
+        </interface>
+        <interface  path="/apibeetle/get_reg_detail" name="getRegDetail"  method="get" usePublicParams ="true" template="beetle/get_reg_detail.xml">
+            <request>
+                <parameters>
+                    <parameter name="node" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="cycle" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="isleaf" type="int" nullable="false"  visiable="true"  ruleId="" value="" />
+                </parameters>
+            </request>
+            <response extend="false" message="json" beanName = "GetRegDetailResponse"></response>
+        </interface>
+        <interface  path="/apibeetle/get_firstinvest_detail" name="getFirstinvestDetail"  method="get" usePublicParams ="true" template="beetle/get_firstinvest_detail.xml">
+            <request>
+                <parameters>
+                    <parameter name="node" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="cycle" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="isleaf" type="int" nullable="false"  visiable="true"  ruleId="" value="" />
+                </parameters>
+            </request>
+            <response extend="false" message="json" beanName = "GetFirstinvestDetailResponse"></response>
+        </interface>
+        <interface  path="/apibeetle/get_repay_plan" name="getRepayPlan"  method="get" usePublicParams ="true" template="beetle/get_repay_plan.xml">
+            <request>
+                <parameters>
+                    <parameter name="p2p_id" type="long" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="status" type="int" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="page" type="int" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="page_num" type="int" nullable="false"  visiable="true"  ruleId="" value="" />
+                </parameters>
+            </request>
+            <response extend="false" message="json" beanName = "GetRepayPlanResponse"></response>
+        </interface>
+        <interface  path="/apibeetle/get_asset_change" name="getAssetChange"  method="get" usePublicParams ="true" template="beetle/get_asset_change.xml">
+            <request>
+                <parameters>
+                    <parameter name="p2p_id" type="long" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="log_info" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="page" type="int" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="page_num" type="int" nullable="false"  visiable="true"  ruleId="" value="" />
+                </parameters>
+            </request>
+            <response extend="false" message="json" beanName = "GetAssetChangeResponse"></response>
+        </interface>
+        <interface  path="/apibeetle/get_ad_list" name="getAdList"  method="get" usePublicParams ="true" template="beetle/get_ad_list.xml">
+            <request>
+                <parameters>
+                    <parameter name="type" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="limit" type="int" nullable="false"  visiable="true"  ruleId="" value="" />
+                </parameters>
+            </request>
+            <response extend="false" message="json" beanName = "GetAdListResponse"></response>
+        </interface>
+        <interface  path="/apibeetle/get_invest_customers" name="getInvestCustomers"  method="get" usePublicParams ="true" template="beetle/get_invest_customers.xml">
+            <request>
+                <parameters>
+                    <parameter name="node" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="cycle" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="sort" type="String" nullable="false"  visiable="true"  ruleId="" value="" />
+                    <parameter name="tt" type="int" nullable="true"  visiable="true"  ruleId="" value="" />
+                    <parameter name="offset" type="int" nullable="true"  visiable="true"  ruleId="" value="" />
+                    <parameter name="total" type="int" nullable="true"  visiable="true"  ruleId="" value="" />
+                </parameters>
+            </request>
+            <response extend="false" message="json" beanName = "GetInvestCustomers"></response>
+        </interface>
+
+    </interfaces>
+</descriptor>

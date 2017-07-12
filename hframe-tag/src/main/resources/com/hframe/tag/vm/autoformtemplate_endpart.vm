@@ -1,0 +1,9 @@
+##第一部分：传入参数
+
+
+#set($map=$MAP)
+
+##模板内容
+$!map.get("buttonInfo")
+</div>
+</div>

@@ -1,0 +1,27 @@
+##第一部分：传入参数
+
+
+#set($map=$MAP)
+
+
+##模板内容
+	<div class="zqh_tab" id="$map.get("id")" style="width:$map.get("width")px;$map.get("style")">
+          <div class="tabContainer">
+            <ul class="tabHead">
+              <li class="currentBtn" ><a href="javascript:void(0);">$map.get("title")</a></li>
+            </ul>
+            <span class="addTab">+</span>
+          </div>
+          <div class="tabBody" style='height:$map.get("iframeHeight")px;width:$map.get("width")px;'>
+            <ul>
+              <li class="currentTabCot">
+              
+              <iframe height='$!map.get("iframeHeight")px;' width='$!map.get("width")px' src='$!map.get("src")' frameborder='0'></iframe>
+              </li>
+              
+            </ul>
+            <div style="clear:both"></div>
+          </div>
+          <div class="modBottom"> <span class="modABL">&nbsp;</span><span class="modABR">&nbsp;</span> </div>
+        </div>
+    

@@ -1,0 +1,183 @@
+<interfaceExample>
+    <name>get_node_data</name>
+    <url>
+        <![CDATA[
+               http://test.lcs.ncfgroup.com/apibeetle/get_node_data?sign=ff46b857068928a2ccf420880f616f5a&cycle=day&time=1461139221&node=1500123&client=face&sign_type=md5&isleaf=0&p2p_id=1500123        ]]>
+        </url>
+    <requestMessage>
+        <![CDATA[
+
+        ]]>
+    </requestMessage>
+    <responseMessage>
+        <![CDATA[
+   {
+    "error_code": 0,
+    "error_msg": "",
+    "data": {
+        "info": {
+            "id": "1500021",
+            "name": "诚实",
+            "system": "S",
+            "company": "c1430361594",
+            "subcompany": "",
+            "dept": "",
+            "team": "t1430361608",
+            "usera": "",
+            "org": "",
+            "userb": "",
+            "level": "usera",
+            "upper_id": "t1430361608",
+            "childs": [
+                "1500021v"
+            ],
+            "code": "AAHDZRL,ASDHDZRL,BO01HDZRL,FHDZRL",
+            "groupid": "1",
+            "row_prefix": "6b",
+            "short_alias": "",
+            "weight": "1",
+            "remark": "",
+            "ctime": "1461121323",
+            "mtime": "2016-04-05 18:55:22",
+            "parents": [
+                {
+                    "id": "S",
+                    "level": "system",
+                    "name": "system"
+                },
+                {
+                    "id": "c1430361594",
+                    "level": "company",
+                    "name": "集团内部员工"
+                },
+                {
+                    "id": "t1430361608",
+                    "level": "team",
+                    "name": "测试团队"
+                },
+                {
+                    "id": "1500021",
+                    "level": "usera",
+                    "name": "诚实"
+                }
+            ],
+             "secondids": [
+                {
+                    "secondlevel": "company",
+                    "secondname": "瑞生集团",
+                    "secondid": "c1461033669"
+                }
+            ],
+            "manager": [ {
+                     "id": "126",
+                    "node_id": "c1430361594",
+                    "level": "company",
+                    "p2p_id": "11450",
+                    "name": "刘县栋",
+                    "mtime": "2016-05-09 14:46:36"
+                } ],
+            "company_num": 2,
+            "subcompany_num": 1,
+            "dept_num": 1,
+            "team_num": 2,
+            "usera_num": 0,
+            "userb_num": 2,
+            "referer_rebate_money": 0,
+            "invest_money": 0,
+            "invest_year_money": 0,
+            "reg_num": 0,
+            "invest_count": 0,
+            "invest_num": 4,
+            "current_invest_num": 3,
+            "firstinvest_num": 0,
+            "pay_money": 0,
+            "carry_money": 0,
+            "loan_repay_money": 0,
+            "real_repay_money": 0,
+            "is_leaf": 0,
+            "secondid_list": {
+                "c1458012056": "testzzy",
+                "c1460961907": "生生集团"
+            },
+            "secondid_list_chart": "c1458012056,c1460961907"
+        },
+        "invest": {
+            "referer_rebate_money": 0,
+            "invest_money": 0,
+            "invest_year_money": 0,
+            "reg_num": 0,
+            "invest_count": 0,
+            "invest_num": 4,
+            "current_invest_num": 3,
+            "firstinvest_num": 0,
+            "pay_money": 0,
+            "carry_money": 0,
+            "loan_repay_money": 0,
+            "real_repay_money": 0,
+            "is_leaf": 0,
+            "ctime": "1461121323"
+        },
+        "groups": {
+            "userc": {
+                "start_day": "2016-04-20",
+                "end_day": "2016-04-20",
+                "is_leaf": 1,
+                "reg_num": 0,
+                "invest_num": 0,
+                "invest_count": 0,
+                "curent_invest_num": 0,
+                "firstinvest_num": 0,
+                "invest_money": 0,
+                "invest_year_money": 0,
+                "pay_money": 0,
+                "carry_money": 0,
+                "loan_repay_money": 0,
+                "real_repay_money": 0,
+                "ctime": 0,
+                "user_status": "EXIST",
+                "offer_date": [ ],
+                "name": "诚实",
+                "id": "userc",
+                "code": "1500021",
+                "level": "userc",
+                "groupid": null,
+                "company": null,
+                "weight": 1
+            },
+            "1500021v": {
+                "start_day": "2016-04-20",
+                "end_day": "2016-04-20",
+                "is_leaf": 0,
+                "reg_num": 0,
+                "invest_num": 0,
+                "invest_count": 0,
+                "curent_invest_num": 0,
+                "firstinvest_num": 0,
+                "invest_money": 0,
+                "invest_year_money": 0,
+                "pay_money": 0,
+                "carry_money": 0,
+                "loan_repay_money": 0,
+                "real_repay_money": 0,
+                "ctime": 0,
+                "user_status": "EXIST",
+                "offer_date": [ ],
+                "name": "兼职理财师组",
+                "id": "1500021v",
+                "code": "",
+                "level": "org",
+                "groupid": "",
+                "company": "c1430361594",
+                "weight": "1",
+                "subcompany_num": 1,
+                "dept_num": 1,
+                "team_num": 2,
+                "usera_num": 0,
+                "userb_num": 2
+            }
+        }
+    }
+}
+        ]]>
+    </responseMessage>
+</interfaceExample>

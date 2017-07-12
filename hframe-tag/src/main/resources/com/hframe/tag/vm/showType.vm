@@ -1,0 +1,127 @@
+#set($widthStype='')
+#set($showType1=$column.ShowType)
+#if(!$null.isNull($showType1))
+$!column.ShowType.PreStr
+#end
+#if($column.ShowType.Width!=0)
+		#set($widthStype="width:$column.ShowType.Width;")
+#end
+#if($column.ShowType.Height!=0)
+		#set($heightStype="height:$column.ShowType.Height;")
+#else
+	#set($heightStype="")	
+#end
+##只有一个类型的时候
+#if($column.ShowType.Type=='input')
+
+	<input type="text" class="form-control" id="$map.get("ViewObject").$column.javaVarName" placeholder="-请输入-"  name='$map.get("ViewObject").$column.javaVarName' style='$!widthStype$!heightStype' 
+	#########################if($null.isNull($oldObjectValue.get(${column.Name})))这种方法无效，为什么呢
+	#if($oldObjectValue.get(${column.Name}))
+	 value='$oldObjectValue.get(${column.Name})'
+	#end
+	/>
+
+
+#elseif($column.ShowType.Type=='select')
+
+	<select name='$map.get("ViewObject").$column.javaVarName' class="form-control"  style='$widthStype' >
+		#foreach($option in $column.ShowType.optionList)
+			<option  value=$option.Value
+			#if("{$oldObjectValue.get(${column.Name})}"=="{$option.Value}")
+			selected='selected'
+			#end
+			>$option.Text</option>
+		#end
+	</select>
+#elseif($column.ShowType.Type=='openwin')
+<div class="form-group form-inline">
+	<input   style='$widthStype' type='hidden'  name='$map.get("ViewObject").${column.javaVarName}'  	 value='$!oldObjectValue.get(${column.Name})'/>
+	<input  type="text" class="form-control" id='$map.get("ViewObject").${column.javaVarName}_DISPNAME' placeholder="-请选择-" disabled  style='$widthStype'	 value='$!oldObjectValue.get("${column.Name}_DISPNAME")' />
+	<a href="javascript:void(0);" onclick="magnifier_Sys(this,'myDialog.jsp?VIEW=${column.ShowType.ShowTypeAttr.View}&TYPE=${column.ShowType.ShowTypeAttr.Type}&CONDITION=$!{column.ShowType.ShowTypeAttr.Condition}&TITLE=$!{column.ShowType.ShowTypeAttr.Title}','{user_id=100&user_name=zhangsan&SCHEMA_MODE=0}',400,500)">
+	<img src="test/fangdajing.jpg" width="20" height="20" class="magnifier_img_sys"></a>
+</div>
+#elseif($column.ShowType.Type=='datetime')
+		#parse("com/hframe/tag/vm/datetime.vm")
+#elseif($column.ShowType.Type=='tipinput')
+		#parse("com/hframe/tag/vm/tipinput_FORGRID.vm")
+#elseif($column.ShowType.Type=='checkbox')
+			<input name='$map.get("ViewObject")s.${column.javaVarName}' style='$widthStype'   type='hidden' value="$!oldObjectValue.get(${column.Name})"
+			/><input style='$widthStype'   type='$column.ShowType.Type' onclick='trueFalseCheckboxOnClick_Sys(this)' 
+			#########################if($null.isNull($oldObjectValue.get(${column.Name})))这种方法无效，为什么呢
+			#if($oldObjectValue.get(${column.Name}))
+			 value="1"
+			#end
+			
+			#if($!oldObjectValue.get(${column.Name})==1)
+			checked="checked"
+			#end
+			
+			/>
+#elseif($column.ShowType.Type=='radio')
+		#foreach($option in $column.ShowType.optionList)
+			<input name='$map.get("ViewObject").$column.javaVarName' style='$widthStype' type='radio' value='$option.Value' 
+				#if("{$oldObjectValue.get(${column.Name})}"=="{$option.Value}")
+				selected='selected'
+				#end
+			>$option.Text
+		#end
+#else
+	#####<input name='$map.get("ViewObject").$column.javaVarName' type='$column.ShowType.Type' style='$widthStype' />
+#end
+#if(!$null.isNull($showType1))
+$!column.ShowType.AfterStr
+#end
+##拥有多个类型的时候
+
+<div class="form-group form-inline">
+#foreach($showType in $column.ShowTypes)
+	#if(!$null.isNull($showType.PreStr))
+	$!showType.PreStr
+	#end
+	
+	#if($showType.Width!=0)
+		#set($widthStype="width:$showType.Width")
+	#end
+	
+	#if($showType.Type=='input')
+	
+		<input  type="text"  class="form-control"  name='$map.get("ViewObject").$column.javaVarName' placeholder='$map.get("ViewObject").$column.javaVarName' style='$widthStype'  value='$oldObjectValue.get(${column.Name})'/>
+	
+	
+	#elseif($showType.Type=='select')
+				#set($selectCount=$velocityCount)
+		<select name='$map.get("ViewObject").$column.javaVarName' style='$widthStype' class="form-control">
+			#foreach($option in $showType.optionList)
+				<option  value=$option.Value
+				#if($option.Value==$oldObjectValue.get(${column.Name}).get($selectCount))
+				  			selected='selected'
+				#end
+				
+				>$option.Text</option>
+			#end
+		</select>
+	
+	#elseif($showType.Type=='openwin')
+		<input name='$map.get("ViewObject").$column.javaVarName' disabled='disabled' style='$widthStype'/><img id='selectOrgnize' border='0' src='/zqhFrame_part1/image/query.gif' onClick='selectDeveloper();' align='absmiddle' style='cursor:hand;'/>
+	#elseif($column.ShowType.Type=='datetime')
+		#parse("com/hframe/tag/vm/datetime.vm")
+	#else
+	
+	<label>
+	<input name='$map.get("ViewObject").$column.javaVarName' type='$showType.Type' 
+	#foreach($val in $oldObjectValue.get(${column.Name}))
+		#if($val==$showType.value)
+				checked='checked'
+		#end
+	
+	#end
+		
+	style='$widthStype'/>
+	#end
+	
+	#if(!$null.isNull($showType.AfterStr))
+	$!showType.AfterStr
+	#end
+	</label>
+#end
+</div>

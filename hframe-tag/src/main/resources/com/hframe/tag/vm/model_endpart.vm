@@ -1,0 +1,15 @@
+##第一部分：传入参数
+
+
+#set($map=$MAP)
+
+
+##模板内容
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

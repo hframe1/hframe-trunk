@@ -1,0 +1,79 @@
+##第一部分：传入参数
+
+
+#set($map=$MAP)
+#set($oldObjectsValue=$map.get("oldObjectsValue"))
+
+
+
+##模板内容
+
+  <div class="panel panel-default" style="width:px;"  id='$map.get("GridId")' >
+  <div class="panel-heading">
+    <h3 class="panel-title">$map.get("Title")</h3>
+  </div>
+  <div class="">
+
+<table   class='zqh_grid table table-striped' style='width: $map.get("Width");'>
+<input id='$map.get("GridId")_TAGINFO'  name='$map.get("GridId")_TAGINFO' type='hidden' value='$map.get("TagInfo")'/>
+ <form action='/$!map.get("Url")' method='post' id='$map.get("GridId")_GRID'>
+	<thead>
+		<tr>
+		<input id='GlobalParam'  name='GlobalParam' type='hidden' value=$!map.get("GlobalParam") />
+			<input id='Param'  name='Param' type='hidden' value=$!map.get("Param") />
+			#foreach($column in $map.get("columnsList"))
+				#if($column.ShowType.Type!='hidden')
+						<th class='zqh_grid_column'  ><label>$column.DisplayName</label></th>
+				#end
+			#end
+			<th class='zqh_grid_column'  ></th>
+		</tr>
+	</thead>
+	<tbody>
+		#foreach($oldObjectValue in $oldObjectsValue)
+		<tr class='zqh_grid_tr'>
+				#foreach($column in $map.get("columnsList"))
+					#if($column.ShowType.Type=='hidden')
+							<input name='$map.get("ViewObject")s.$column.javaVarName' type='hidden' style='$widthStype' 
+							#if($oldObjectValue.get(${column.Name}))
+							 value='$oldObjectValue.get(${column.Name})'
+							#end
+							/>
+					
+					#else
+						<td  style='width:$column.FiledWidth'>
+						#if($map.get("Editable")=='text')
+							#parse("com/hframe/tag/vm/showType_OnlyShow.vm")
+						#else
+							#parse("com/hframe/tag/vm/showType_FORGRID.vm")
+						#end
+						#if($column.Nullable==0)
+							#parse("com/hframe/tag/vm/redstar.vm")
+						#end
+					#end
+				#end
+					</td>
+					<td>
+						<a href='javascript:void(0)' onclick="btnClk_Sys(this,'current-delOneRow','test/createDialog.jsp',0,'{param=?&targetObj=&targetType=}')">×</a>
+								<a href="javascript:void(0);" onclick="rowUp_Sys(this)">up</a>
+								<a href="javascript:void(0);" onclick="rowDown_Sys(this)">down</a>
+								<span class="glyphicon glyphicon-remove" aria-hidden="true" onClick="btnClk_Sys(this,'current-delOneRow','test/createDialog.jsp',0,'{param=?&amp;targetObj=&amp;targetType=}')" style='cursor:hand;'></span>
+					<span class="glyphicon glyphicon-chevron-up" aria-hidden="true" onClick="rowUp_Sys(this)" style='cursor:hand;'></span>
+					<span class="glyphicon glyphicon-chevron-down" aria-hidden="true" onClick="rowDown_Sys(this)" style='cursor:hand;'></span>
+					</td>
+		</tr>
+	    #end
+	</tbody>
+	<tfoot>
+				<tr>
+					<td colspan="100%" align="right">
+						<input class="zqh_form_add btn btn-default btn-sm" type="button" value="复制选择行"
+							onclick="btnClk_Sys(this,'current-copyOneRow','test/createDialog.jsp',0,'{param=?&amp;targetObj=&amp;targetType=}')">
+						<input class="zqh_form_add btn btn-default btn-sm" type="button" value="添加新行"
+							onclick="btnClk_Sys(this,'current-addOneRow','test/createDialog.jsp',0,'{param=?&amp;targetObj=&amp;targetType=}')">
+					</td>
+				</tr>
+				<tr>
+					<td class='zqh_form_footer' colspan=100%>
+					
+				

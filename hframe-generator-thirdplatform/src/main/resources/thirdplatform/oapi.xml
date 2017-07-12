@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<descriptor>
+    <global>
+        <staticParameters>
+            <staticParameter>test_model</staticParameter>
+            <staticParameter>client</staticParameter>
+            <staticParameter>key</staticParameter>
+        </staticParameters>
+        <properties>
+            <javaPackage>com.ucfgroup.client.oapi</javaPackage>
+            <clientName>*Client</clientName>
+            <resourceFolder>third</resourceFolder>
+            <beanOrganizeInterfaceBase>true</beanOrganizeInterfaceBase>
+        </properties>
+        <rules>
+            <rule id="getCurTimestamp" type="encrypt">Rules.getTimeStamp()</rule>
+            <rule id="sign" type="encrypt"><![CDATA[
+                Rules.signAllParams(${this},#{key},#{key},"","")
+            ]]></rule>
+        </rules>
+        <requestConfig>
+            <publicParameters>
+                <parameter name="client_id" type="String" nullable="false" visiable="false" ruleId="" value="#{client}"/>
+                <parameter name="timestamp" type="String" nullable="false" visiable="false" ruleId="getCurTimestamp" value=""/>
+                <parameter name="sign" type="String" nullable="false" visiable="false" ruleId="sign" value=""/>
+            </publicParameters>
+        </requestConfig>
+        <responseConfig>
+            <!--<publicNodes>-->
+                <!--<node path="/" type="BeetleResult" >-->
+                    <!--<node path="errorCode"></node>-->
+                    <!--<node path="errorMsg"></node>-->
+                    <!--<node path="data" type="generic"></node>-->
+                <!--</node>-->
+            <!--</publicNodes>-->
+        </responseConfig>
+    </global>
+    <interfaces>
+        <interface  path="/user/getUserInfo" name="getUserInfo"  method="get" usePublicParams ="true" template="oapi/getUserInfo.xml">
+            <request>
+                <parameters>
+                    <parameter name="access_token" type="String" nullable="false" visiable="true" ruleId="" value=""/>
+                </parameters>
+            </request>
+            <response extend="false" message="json" beanName = "GetUserInfoResponse"></response>
+        </interface>
+        <interface  path="/user/getAdvancedUserInfo" name="getAdvancedUserInfo"  method="get" usePublicParams ="true" template="oapi/getAdvancedUserInfo.xml">
+            <request>
+                <parameters>
+                    <parameter name="access_token" type="String" nullable="false" visiable="true" ruleId="" value=""/>
+                </parameters>
+            </request>
+            <response extend="false" message="json" beanName = "GetAdvancedUserInfoResponse"></response>
+        </interface>
+    </interfaces>
+</descriptor>

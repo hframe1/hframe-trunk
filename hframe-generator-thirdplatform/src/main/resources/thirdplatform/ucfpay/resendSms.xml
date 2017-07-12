@@ -1,0 +1,20 @@
+<interfaceExample>
+    <name>resendSms</name>
+    <url>
+        <![CDATA[
+            http://sandbox.firstpay.com/security/gateway.do?service=REQ_PAY_QUICK_RESEND&secId=RSA&version=3.0.0&reqSn=132434&merchantId=AAAA&merchantNo=fdsfdsafds&sign=fdsafdsafds
+        ]]>
+        </url>
+    <requestMessage>
+        <![CDATA[
+        ]]>
+    </requestMessage>
+    <responseMessage>
+        <![CDATA[
+         {
+            "resCode": "00000",
+            "resMessage": "成功"
+        }
+        ]]>
+    </responseMessage>
+</interfaceExample>

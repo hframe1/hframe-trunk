@@ -1,0 +1,16 @@
+##第一部分：传入参数
+
+
+#set($map=$MAP)
+#set($oldObjectsValue=$map.get("oldObjectsValue"))
+			
+		#foreach($fsList in $oldObjectsValue)
+		<tr>
+				#foreach($field in $fsList)
+			<td  style=''>  ####width:$field.FiledWidth
+			
+				#parse("com/hframe/tag/vm/field_show.vm")
+			</td>
+			#end
+		</tr>
+	    #end

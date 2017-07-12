@@ -1,0 +1,75 @@
+<interfaceExample>
+    <name>get_firstinvest_detail</name>
+    <url>
+        <![CDATA[
+            http://test.lcs.ncfgroup.com/apibeetle/get_firstinvest_detail?cycle=month&isleaf=0&node=1500123&client=face&time=1461139063&sign_type=md5&sign=caae8356afe3c127b32ea34edac42572        ]]>
+        </url>
+    <requestMessage>
+        <![CDATA[
+          
+        ]]>
+    </requestMessage>
+    <responseMessage>
+        <![CDATA[
+          {
+            "error_code": 0,
+            "error_msg": "",
+            "data": [
+                {
+                    "consume_user_id": "1500027",
+                    "consume_real_name": "买卖",
+                    "money": "998600.00",
+                    "mobile": "1yuAa5u/5U2aAWIMqxei4Q==",
+                    "create_time": "2016-04-05 10:49:01",
+                    "refer_user_id": "1500026",
+                    "refer_short_alias": "AAHDZRQ",
+                    "invest_money": "1400.00",
+                    "invest_year_money": "233.333333",
+                    "user_status": "NOT_EXIST",
+                    "refer_real_name": "马钱"
+                },
+                {
+                    "consume_user_id": "1500018",
+                    "consume_real_name": "胡天",
+                    "money": "998600.00",
+                    "mobile": "sog9XepoNMBZyNe/M+30oA==",
+                    "create_time": "2016-04-05 10:49:01",
+                    "refer_user_id": "1500012",
+                    "refer_short_alias": "AAHDZRC",
+                    "invest_money": "1400.00",
+                    "invest_year_money": "233.333333",
+                    "user_status": "EXIST",
+                    "refer_real_name": "刘兰"
+                },
+                {
+                    "consume_user_id": "1500119",
+                    "consume_real_name": "区别",
+                    "money": "999000.00",
+                    "mobile": "7leexnv1LTNzckl8rm7I9g==",
+                    "create_time": "2016-04-06 14:45:07",
+                    "refer_user_id": "1500057",
+                    "refer_short_alias": "AAHDZSP",
+                    "invest_money": "1000.00",
+                    "invest_year_money": "140.00000000",
+                    "user_status": "NOT_EXIST",
+                    "refer_real_name": "区区"
+                },
+                {
+                    "consume_user_id": "1500057",
+                    "consume_real_name": "区区",
+                    "money": "998000.00",
+                    "mobile": "oqPnH5K0KsvgCwv2dRJ3Vg==",
+                    "create_time": "2016-04-05 17:13:42",
+                    "refer_user_id": "1500012",
+                    "refer_short_alias": "AAHDZRC",
+                    "invest_money": "1000.00",
+                    "invest_year_money": "250.000000",
+                    "user_status": "EXIST",
+                    "refer_real_name": "刘兰"
+                }
+            ]
+        }
+
+        ]]>
+    </responseMessage>
+</interfaceExample>

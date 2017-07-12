@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<descriptor>
+    <global>
+        <staticParameters>
+            <staticParameter>test_model</staticParameter>
+            <staticParameter>domain</staticParameter>
+            <staticParameter>key</staticParameter>
+            <staticParameter>appid</staticParameter>
+            <staticParameter>mch_id</staticParameter>
+            <staticParameter>device_info</staticParameter>
+            <staticParameter>fee_type</staticParameter>
+            <staticParameter>goods_tag</staticParameter>
+            <staticParameter>trade_type</staticParameter>
+            <staticParameter>limit_pay</staticParameter>
+            <staticParameter>refund_fee_type</staticParameter>
+
+
+            <staticParameter>unifiedorder_callback</staticParameter>
+        </staticParameters>
+        <properties>
+            <javaPackage>com.ucfgroup.client.weixinpay</javaPackage>
+            <clientName>*Client</clientName>
+            <resourceFolder>third</resourceFolder>
+            <beanOrganizeInterfaceBase>true</beanOrganizeInterfaceBase>
+        </properties>
+        <rules>
+            <rule id="md5RandomNumber" type="encrypt"><![CDATA[
+                Rules.randomChar32()
+            ]]></rule>
+            <rule id="encryptSign" type="encrypt"><![CDATA[
+                Rules.signAllNotEmptyParams(${this},"&key=" + #{key})
+            ]]></rule>
+            <rule id="decryptSign" type="encrypt"><![CDATA[
+                Rules.checkAllNotEmptyParamsSign(${this},"&key=" + #{key})
+            ]]></rule>
+        </rules>
+        <requestConfig>
+            <valueMappers>
+                <valueMapper name="mobile"  ruleId="MobileMapping" value=""/>
+            </valueMappers>
+            <publicNodes>
+                <node path="/*/appid" type="String" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="#{appid}"/>
+                <node path="/*/mch_id" type="String" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="#{mch_id}"/>
+                <node path="/*/device_info" type="String" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="#{device_info}"/>
+                <node path="/*/fee_type" type="String" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="#{fee_type}"/>
+                <node path="/*/goods_tag" type="String" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="#{goods_tag}"/>
+                <node path="/*/trade_type" type="String" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="#{trade_type}"/>
+                <node path="/*/limit_pay" type="String" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="#{limit_pay}"/>
+                <node path="/*/nonce_str" type="String" nullable="false" visiable="false" isFloatNode="true" ruleId="md5RandomNumber" value=""/>
+                <node path="/*/sign" type="String" nullable="false" visiable="false" isFloatNode="true" ruleId="encryptSign" value=""/>
+                <node path="/*/notify_url" type="String" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="#{unifiedorder_callback}"/>
+                <node path="/*/refund_fee_type" type="String" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="#{refund_fee_type}"/>
+                <node path="/*/op_user_id" type="String" nullable="false" visiable="false" isFloatNode="true" ruleId="" value="#{mch_id}"/>
+            </publicNodes>
+        </requestConfig>
+        <responseConfig>
+            <valueMappers>
+                <valueMapper path="**/mobile"  ruleId="MobileMapping" value=""/>
+            </valueMappers>
+            <publicNodes>
+                <node path="/*/sign" type="String" nullable="false" visiable="false" ruleId="decryptSign" value=""/>
+            </publicNodes>
+        </responseConfig>
+    </global>
+    <interfaces>
+        <interface  path="pay/unifiedorder" name="unifiedorder"  method="post" usePublicParams ="true" template="weixinpay/unifiedorder.xml">
+            <request load="head#body" message="xml" beanName = "UnifiedOrderRequest">
+                <!--<nodes>-->
+                    <!--<node path="/xml" type="" merge="true">-->
+                    <!--</node>-->
+                    <!--<node path="*" type="" merge="true"/>-->
+                <!--</nodes>-->
+            </request>
+            <response load="body" extend="false" message="xml" beanName = "UnifiedOrderResponse">
+                <!--<node path="data/**"  type="HfcfgLoginPage" />-->
+                <!--<node path="**/mobile"  type="HfcfgLoginPage" ruleId="" value="(-)AES(${this},$${SECRET_KEY})" />-->
+            </response>
+        </interface>
+        <interface  path="pay/orderquery" name="orderquery"  method="post" usePublicParams ="true" template="weixinpay/orderquery.xml">
+            <request load="head#body" message="xml" beanName = "OrderQueryRequest">
+            </request>
+            <response load="body" extend="false" message="xml" beanName = "OrderQueryResponse">
+            </response>
+        </interface>
+        <interface  path="pay/closeorder" name="closeorder"  method="post" usePublicParams ="true" template="weixinpay/closeorder.xml">
+            <request load="head#body" message="xml" beanName = "CloseOrderRequest">
+            </request>
+            <response load="body" extend="false" message="xml" beanName = "CloseOrderResponse">
+            </response>
+        </interface>
+        <interface  path="pay/downloadbill" name="downloadbill"  method="post" usePublicParams ="true" template="weixinpay/downloadbill.xml">
+            <request load="head#body" message="xml" beanName = "DownloadBillRequest">
+            </request>
+            <response load="body" extend="false" message="string">
+            </response>
+        </interface>
+        <interface  path="secapi/pay/refund" name="refund"  method="post" usePublicParams ="true" template="weixinpay/refund.xml">
+            <request load="head#body" message="xml" beanName = "RefundRequest">
+            </request>
+            <response load="body" extend="false" message="xml" beanName = "RefundResponse">
+            </response>
+        </interface>
+        <interface  path="pay/refundquery" name="refundquery"  method="post" usePublicParams ="true" template="weixinpay/refundquery.xml">
+            <request load="head#body" message="xml" beanName = "RefundQueryRequest">
+            </request>
+            <response load="body" extend="false" message="xml" beanName = "RefundQueryResponse">
+            </response>
+        </interface>
+        <interface name="notice"  method="post" usePublicParams ="false" template="weixinpay/notice.xml">
+            <request load="head#body" message="xml" beanName = "WXPayNotifyReplay">
+            </request>
+            <response load="body" extend="false" message="xml" beanName = "WXPayNotifyResult">
+            </response>
+        </interface>
+     </interfaces>
+</descriptor>

@@ -1,0 +1,20 @@
+#if($isPop)
+    #parse("blank_startpart.vm")
+#else
+    #parse("default_startpart.vm")
+#end
+
+<div class="row-fluid">
+#set($form = $qForm)
+#parse("component/queryForm.vm")
+</div>
+<div class="row-fluid">
+#set($list = $qList)
+#parse("component/queryList.vm")
+</div>
+
+#if($isPop)
+    #parse("blank_endpart.vm")
+#else
+    #parse("default_endpart.vm")
+#end
